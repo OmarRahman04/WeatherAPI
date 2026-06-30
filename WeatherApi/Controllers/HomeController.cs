@@ -3,7 +3,7 @@
 namespace WeatherApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
@@ -15,8 +15,8 @@ public class HomeController : ControllerBase
 
     [HttpGet("/")]
     [ApiExplorerSettings(IgnoreApi = true)]
-    public RedirectResult Swagger()
+    public IActionResult Swagger()
     {
-        return Redirect("/swagger/index.html");
+        return Redirect("/weather/swagger/index.html");
     }
 }
