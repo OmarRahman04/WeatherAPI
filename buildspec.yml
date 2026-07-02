@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0
+
+  pre_build:
+    commands:
+      - cd WeatherApi
+      - dotnet restore
+
+  build:
+    commands:
+      - dotnet build --configuration Release
+      - dotnet publish --configuration Release --output publish
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: WeatherApi/publish
