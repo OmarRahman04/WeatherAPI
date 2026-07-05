@@ -26,7 +26,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("test")]
     public IActionResult Test()
     {
-        return Ok("Hello from GitHub CI/CD Pipeline");
+        return Ok("Version 2");
     }
 
     [HttpGet("search")]
