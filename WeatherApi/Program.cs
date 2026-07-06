@@ -54,5 +54,5 @@ foreach (var endpoint in app.Services
 {
     Console.WriteLine(endpoint.DisplayName);
 }
-
+app.MapGet("/test", () => "Lambda Working");
 app.Run();
