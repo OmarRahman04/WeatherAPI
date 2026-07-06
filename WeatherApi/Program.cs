@@ -1,4 +1,5 @@
 using Amazon.Lambda.AspNetCoreServer.Hosting;
+using Microsoft.AspNetCore.Routing;
 using WeatherApi.Configuration;
 using WeatherApi.Services;
 
@@ -13,13 +14,9 @@ builder.Services.AddSingleton<MongoDbService>();
 // Register Weather Service
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 
-// If WeatherService uses HttpClient, uncomment this line:
-// builder.Services.AddHttpClient();
-
 // Lambda Hosting
 builder.Services.AddAWSLambdaHosting(
-    LambdaEventSource.HttpApi
-);
+    LambdaEventSource.HttpApi);
 
 // Controllers
 builder.Services.AddControllers();
@@ -30,6 +27,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Swagger
 app.UseSwagger(c =>
 {
     c.RouteTemplate = "weather/swagger/{documentName}/swagger.json";
@@ -45,14 +43,22 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+// Map Controllers
 app.MapControllers();
 
-// ADD THIS HERE
-foreach (var endpoint in app.Services
-         .GetRequiredService<Microsoft.AspNetCore.Routing.EndpointDataSource>()
-         .Endpoints)
+// Simple test endpoint
+app.MapGet("/test", () => "Lambda Working");
+
+// Print all registered endpoints
+var endpointDataSource = app.Services.GetRequiredService<EndpointDataSource>();
+
+Console.WriteLine("========== REGISTERED ENDPOINTS ==========");
+
+foreach (var endpoint in endpointDataSource.Endpoints)
 {
     Console.WriteLine(endpoint.DisplayName);
 }
-app.MapGet("/test", () => "Lambda Working");
+
+Console.WriteLine("==========================================");
+
 app.Run();
