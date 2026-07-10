@@ -13,7 +13,4 @@ phases:
       - cd WeatherApi
       - dotnet restore
       - dotnet lambda package --configuration Release --output-package WeatherApi.zip
-
-artifacts:
-  files:
-    - WeatherApi/WeatherApi.zip
+      - aws lambda update-function-code --function-name WeatherApi --zip-file fileb://WeatherApi.zip
