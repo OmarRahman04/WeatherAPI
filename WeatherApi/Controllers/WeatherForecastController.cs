@@ -22,13 +22,12 @@ public class WeatherForecastController : ControllerBase
         _mongoDbService = mongoDbService;
     }
 
-    // 👇 ADD IT HERE
+
     [HttpGet("test")]
     public IActionResult Test()
     {
-        return Ok("Version 2");
+        return Ok("Version 3 - CI/CD Working");
     }
-
     [HttpGet("search")]
     public IEnumerable<SearchLocation> GetSearchLocations(string? q, string? lang = "en")
     {

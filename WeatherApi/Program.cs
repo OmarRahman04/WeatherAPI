@@ -27,29 +27,36 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger
+// ===========================
+// Swagger JSON
+// ===========================
 app.UseSwagger(c =>
 {
     c.RouteTemplate = "weather/swagger/{documentName}/swagger.json";
 });
 
+// ===========================
+// Swagger UI
+// ===========================
 app.UseSwaggerUI(c =>
 {
     c.RoutePrefix = "weather/swagger";
-    c.SwaggerEndpoint("/weather/swagger/v1/swagger.json", "WeatherApi API V1");
+
+    // Relative path (important for Lambda + API Gateway)
+    c.SwaggerEndpoint("v1/swagger.json", "WeatherApi API V1");
 });
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-// Map Controllers
+// Controllers
 app.MapControllers();
 
-// Simple test endpoint
+// Test endpoint
 app.MapGet("/test", () => "Lambda Working");
 
-// Print all registered endpoints
+// Print all endpoints
 var endpointDataSource = app.Services.GetRequiredService<EndpointDataSource>();
 
 Console.WriteLine("========== REGISTERED ENDPOINTS ==========");
@@ -61,19 +68,4 @@ foreach (var endpoint in endpointDataSource.Endpoints)
 
 Console.WriteLine("==========================================");
 
-
-
-
-
-
-
 app.Run();
-
-
-
-
-
-
-
-
-

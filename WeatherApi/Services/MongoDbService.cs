@@ -16,7 +16,7 @@ namespace WeatherApi.Services
             var mongoDatabase = mongoClient.GetDatabase(settings.Value.DatabaseName);
 
             _weatherCollection = mongoDatabase.GetCollection<WeatherRecord>(
-                settings.Value.WeatherCollectionName);
+       settings.Value.CollectionName);
         }
 
         public async Task SaveWeatherAsync(WeatherRecord weather)
