@@ -56,16 +56,5 @@ app.MapControllers();
 // Test endpoint
 app.MapGet("/test", () => "Lambda Working");
 
-// Print all endpoints
-var endpointDataSource = app.Services.GetRequiredService<EndpointDataSource>();
-
-Console.WriteLine("========== REGISTERED ENDPOINTS ==========");
-
-foreach (var endpoint in endpointDataSource.Endpoints)
-{
-    Console.WriteLine(endpoint.DisplayName);
-}
-
-Console.WriteLine("==========================================");
 
 app.Run();
