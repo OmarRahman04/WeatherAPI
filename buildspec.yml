@@ -8,13 +8,10 @@ phases:
       - dotnet tool install -g Amazon.Lambda.Tools
       - export PATH="$PATH:/root/.dotnet/tools"
 
-  pre_build:
+  build:
     commands:
       - cd WeatherApi
       - dotnet restore
-
-  build:
-    commands:
       - dotnet lambda package --configuration Release --output-package WeatherApi.zip
 
 artifacts:
